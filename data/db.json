@@ -1,0 +1,148 @@
+{
+  "users": [
+    {
+      "id": "user_1788273960431",
+      "name": "lara",
+      "email": "lara@gmail.com",
+      "passwordHash": "5e98d5b72dd27d7602362967d91f3daf:76fe50de009eb04d22cf7b9e0e6836c9be93027236386e3c31fa09318ee64d6e64c2422a90548da765d1219999a07a8c62ed5002ae3ab4e53b1baff99f7f664a",
+      "createdAt": "2026-09-01T14:46:00.524Z"
+    },
+    {
+      "id": "user_1788303820153",
+      "name": "maria",
+      "email": "maria@gmail.com",
+      "passwordHash": "39413372e9638a5b2ae16b39411df9bb:7352bd2ddba1db9ae37856660fffce05edeefe2d07455b31ffa29f42a383c8747fbd4c88200df4e3d229ff10d608d46c9218bbd726c36540a42673753253a2fe",
+      "createdAt": "2026-09-01T23:03:40.213Z"
+    },
+    {
+      "id": "user_1788304405516",
+      "name": "renata",
+      "email": "renata@gmail.com",
+      "passwordHash": "739e747e79d0847af0b3473ae1d694d8:6f33adb17c0162cef9ebcea9e652e9f6a248cffbee35b9fde5c5cd187e9f8f4d3c2f23487318622ddd5e53ae9df7decefd6a41536665077ea2d016d32a993edc",
+      "createdAt": "2026-09-01T23:13:25.562Z"
+    },
+    {
+      "id": "user_1788347401273",
+      "name": "melina",
+      "email": "melina@gmail.com",
+      "passwordHash": "47de1f657bdb5d21c0d569541cf747da:28b794afab38d6f0abe631790cb19544f003e5e614f385c051d7db1bada3d0b5bfd5061a1aef8ee5dc6f216855a6258593cf9aa0df61fed896e828980654e53d",
+      "createdAt": "2026-09-02T11:10:01.331Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "ord_1788274011688",
+      "userId": "user_1788273960431",
+      "items": [
+        {
+          "id": "p8",
+          "name": "Pulseira Elos Duplos",
+          "price": 104.9,
+          "qty": 1
+        }
+      ],
+      "total": 104.9,
+      "status": "aprovado",
+      "createdAt": "2026-09-01T14:46:51.688Z"
+    },
+    {
+      "id": "ord_1788274068861",
+      "userId": "user_1788273960431",
+      "items": [
+        {
+          "id": "p12",
+          "name": "Tornozeleira banhada a ouro",
+          "price": 119.9,
+          "qty": 1
+        }
+      ],
+      "total": 119.9,
+      "status": "aprovado",
+      "createdAt": "2026-09-01T14:47:48.861Z"
+    },
+    {
+      "id": "ord_1788274829582",
+      "userId": "user_1788273960431",
+      "items": [
+        {
+          "id": "p3",
+          "name": "Brinco Gota Dourada",
+          "price": 74.9,
+          "qty": 1
+        }
+      ],
+      "total": 74.9,
+      "status": "aprovado",
+      "createdAt": "2026-09-01T15:00:29.582Z"
+    },
+    {
+      "id": "ord_1788303852969",
+      "userId": "user_1788303820153",
+      "items": [
+        {
+          "id": "p4",
+          "name": "Brinco Argola Clássica",
+          "price": 69.9,
+          "qty": 1
+        }
+      ],
+      "total": 69.9,
+      "status": "aprovado",
+      "createdAt": "2026-09-01T23:04:12.969Z"
+    },
+    {
+      "id": "ord_1788304444278",
+      "userId": "user_1788304405516",
+      "items": [
+        {
+          "id": "p5",
+          "name": "Colar Ponto de Luz",
+          "price": 129.9,
+          "qty": 1
+        },
+        {
+          "id": "p10",
+          "name": "Conjunto Pedra Cravejada ",
+          "price": 219.9,
+          "qty": 1
+        }
+      ],
+      "total": 349.8,
+      "status": "aprovado",
+      "createdAt": "2026-09-01T23:14:04.278Z"
+    },
+    {
+      "id": "ord_1788347728884",
+      "userId": "user_1788347401273",
+      "items": [
+        {
+          "id": "p3",
+          "name": "Brinco Gota Dourada",
+          "price": 74.9,
+          "qty": 1
+        }
+      ],
+      "total": 74.9,
+      "status": "aprovado",
+      "createdAt": "2026-09-02T11:15:28.884Z"
+    }
+  ],
+  "favorites": [
+    {
+      "userId": "user_1788273960431",
+      "productId": "p4"
+    },
+    {
+      "userId": "user_1788273960431",
+      "productId": "p8"
+    },
+    {
+      "userId": "user_1788303820153",
+      "productId": "p1"
+    },
+    {
+      "userId": "user_1788347401273",
+      "productId": "p3"
+    }
+  ]
+}

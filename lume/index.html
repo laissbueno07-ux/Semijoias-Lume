@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+      <nav class="nav-left">
+        <a href="#colecao">Coleção</a>
+        <a href="#sobre">Sobre</a>
+      </nav>
+      <a href="index.html" class="logo">Lume</a>
+      <nav class="nav-right">
+        <a href="guia-de-cuidados.html">Guia de cuidados</a>
+        <a href="favoritos.html" class="icon-link" aria-label="Favoritos">♥</a>
+        <span id="authArea" class="auth-area"></span>
+        <button class="cart-btn" id="cartToggle" aria-label="Abrir carrinho">
+          Sacola <span class="cart-count" id="cartCount">0</span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero-text">
+      <p class="eyebrow">Banhadas a ouro 18k · Peças à prova d'água</p>
+      <h1>Pequenos brilhos<br>para o seu dia a dia.</h1>
+      <p class="hero-sub">Semijoias desenhadas para durar — do café da manhã ao jantar, sem trocar de acessório.</p>
+      <a href="#colecao" class="btn btn-primary">Ver coleção</a>
+    </div>
+    <div class="hero-frame">
+      <img src="Logo.png" alt="Destaque Lume Semijoias" class="hero-illustration">
+    </div>
+  </section>
+
+  <div class="chain-divider" aria-hidden="true">
+    <svg viewBox="0 0 800 24" preserveAspectRatio="none"><rect width="800" height="24" fill="url(#chainPattern)"/></svg>
+  </div>
+
+  <main>
+    <section class="collection" id="colecao">
+      <h2 class="section-title">A coleção</h2>
+      <p class="section-sub">Cada peça, folheada e revisada à mão antes de chegar até você.</p>
+
+      <div class="toolbar">
+        <div class="search-box">
+          <span class="search-icon" aria-hidden="true">⚲</span>
+          <input type="search" id="searchInput" placeholder="Buscar por nome, ex: anel, colar...">
+        </div>
+        <div class="category-tabs" id="categoryTabs"></div>
+      </div>
+
+      <p class="no-results" id="noResults" hidden>Nenhuma peça encontrada com esses filtros.</p>
+      <div class="product-grid" id="productGrid"></div>
+    </section>
+  </main>
+
+  <div class="chain-divider" aria-hidden="true">
+    <svg viewBox="0 0 800 24" preserveAspectRatio="none"><rect width="800" height="24" fill="url(#chainPattern)"/></svg>
+  </div>
+
+  <section class="about" id="sobre">
+    <h2 class="section-title">Sobre a Lume</h2>
+    <p>Fazemos curadoria de semijoias banhadas a ouro 18k, pensadas para acompanhar sua rotina sem perder o brilho. Trabalhamos com fornecedores que testam liga metálica e banho antes de qualquer peça chegar até você.</p>
+  </section>
+
+  <footer class="site-footer" id="contato">
+    <p class="logo footer-logo">Lume</p>
+    <p>Atendimento: contato@lume.com.br</p>
+    <p class="fine-print">© 2026 Lume. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Carrinho lateral -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <h3>Sua sacola</h3>
+      <button id="cartClose" aria-label="Fechar carrinho">✕</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <p class="cart-empty">Sua sacola está vazia.</p>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span>Subtotal</span>
+        <span id="cartSubtotal">R$ 0,00</span>
+      </div>
+      <button class="btn btn-primary btn-full" id="checkoutBtn" disabled>Finalizar compra</button>
+      <p class="checkout-note" id="checkoutNote"></p>
+    </div>
+  </aside>
+
+  <!-- Padrão de corrente reutilizado nos divisores -->
+  <svg width="0" height="0" style="position:absolute">
+    <defs>
+      <pattern id="chainPattern" x="0" y="0" width="40" height="24" patternUnits="userSpaceOnUse">
+        <ellipse cx="10" cy="12" rx="8" ry="5" fill="none" stroke="var(--gold)" stroke-width="1.5" transform="rotate(30 10 12)"/>
+        <ellipse cx="30" cy="12" rx="8" ry="5" fill="none" stroke="var(--gold)" stroke-width="1.5" transform="rotate(-30 30 12)"/>
+      </pattern>
+    </defs>
+  </svg>
+
+  <!-- REMOVIDO: SDK do Supabase -->
+  <script src="js/products.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script src="js/script.js"></script>
+</body>
+</html>

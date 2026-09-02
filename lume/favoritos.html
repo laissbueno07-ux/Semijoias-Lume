@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Favoritos — Lume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">☰</button>
+      <nav class="nav-left">
+        <a href="index.html#colecao">Coleção</a>
+        <a href="index.html#sobre">Sobre</a>
+      </nav>
+      <a href="index.html" class="logo">Lume</a>
+      <nav class="nav-right">
+        <a href="guia-de-cuidados.html">Guia de cuidados</a>
+        <a href="favoritos.html" class="icon-link" aria-label="Favoritos">♥</a>
+        <span id="authArea" class="auth-area"></span>
+      </nav>
+    </div>
+  </header>
+
+  <section class="collection">
+    <h2 class="section-title">Seus favoritos</h2>
+    <p class="section-sub">As peças que você guardou para ver com calma.</p>
+    <div class="product-grid" id="favGrid"></div>
+    <p class="cart-empty" id="favEmpty" hidden>Você ainda não favoritou nenhuma peça.</p>
+  </section>
+
+  <footer class="site-footer">
+    <p class="logo footer-logo">Lume</p>
+    <p>Atendimento: contato@lume.com.br</p>
+    <p class="fine-print">© 2026 Lume. Todos os direitos reservados.</p>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/auth-ui.js"></script>
+  <script>
+    const formatBRL = (value) =>
+      value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" });
+
+    // Função para renderizar a imagem do produto
+    function renderProductImage(product) {
+      if (product.images && product.images.length > 0) {
+        return `<img src="${product.images[0]}" alt="${product.name}" style="width:100%;height:180px;object-fit:cover;border-radius:8px 8px 0 0;">`;
+      }
+      return ICONS[product.icon] || '';
+    }
+
+    async function loadFavoritesPage() {
+      try {
+        // Verifica se está logado
+        const meRes = await fetch("/api/me");
+        const meData = await meRes.json();
+        
+        if (!meData.user) {
+          alert("Você precisa estar logado para ver seus favoritos.");
+          window.location.href = "login.html";
+          return;
+        }
+
+        // Carrega favoritos
+        const res = await fetch("/api/favoritos");
+        const data = await res.json();
+        const favProducts = PRODUCTS.filter((p) => (data.favoritos || []).includes(p.id));
+
+        const grid = document.getElementById("favGrid");
+        const empty = document.getElementById("favEmpty");
+        
+        empty.hidden = favProducts.length > 0;
+
+        if (favProducts.length === 0) {
+          grid.innerHTML = '';
+          return;
+        }
+
+        grid.innerHTML = favProducts
+          .map(
+            (p) => `
+            <article class="product-card">
+              <div class="product-media" style="height:180px;display:flex;align-items:center;justify-content:center;background:#faf8f5;border-radius:8px 8px 0 0;overflow:hidden;">
+                ${renderProductImage(p)}
+              </div>
+              <div class="product-info">
+                <div class="product-title-row">
+                  <h3 class="product-name">${p.name}</h3>
+                  <button class="fav-btn active" data-id="${p.id}" aria-label="Remover dos favoritos">♥</button>
+                </div>
+                <p class="product-desc">${p.desc}</p>
+                <p class="product-price">${formatBRL(p.price)}</p>
+              </div>
+            </article>`
+          )
+          .join("");
+
+        grid.querySelectorAll(".fav-btn").forEach((btn) => {
+          btn.addEventListener("click", async () => {
+            try {
+              const response = await fetch(`/api/favoritos/${btn.dataset.id}`, { 
+                method: "POST",
+                headers: { "Content-Type": "application/json" }
+              });
+              if (response.ok) {
+                loadFavoritesPage(); // Recarrega a lista
+              }
+            } catch (err) {
+              console.error("Erro ao remover favorito:", err);
+            }
+          });
+        });
+      } catch (err) {
+        console.error("Erro ao carregar favoritos:", err);
+        alert("Erro ao carregar favoritos. Tente novamente.");
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", loadFavoritesPage);
+  </script>
+</body>
+</html>
