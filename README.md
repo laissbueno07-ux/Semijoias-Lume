@@ -12,7 +12,6 @@
 
   **E-commerce Completo:** Fluxo de carrinho de compras, busca em tempo real e filtros por categoria.
    **Autenticação Segura:** Cadastro e login de usuários com criptografia de senhas e sessão persistente via Cookies (7 dias).
-   **Checkout Transparente:** Integração homologada com Mercado Pago para pagamentos eficientes. 
    **Lista de Desejos:** Opção para favoritar produtos (salvos por usuário).
    **Área do Cliente:** Painel de perfil para gerenciamento de dados cadastrais e histórico de pedidos.
    **Design Customizável:** Identidade visual centralizada em variáveis CSS para fácil alteração de cores e fontes.
