@@ -4,7 +4,6 @@
   <img src="https://shields.io" alt="Node.js">
   <img src="https://shields.io" alt="Express">
   <img src="https://shields.io" alt="JavaScript">
-  <img src="https://shields.io" alt="Mercado Pago">
 </p>
 
 ---
