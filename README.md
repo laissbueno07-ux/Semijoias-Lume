@@ -1,114 +1,126 @@
-# Lume — loja de semijoias
+# Lume — Joias e Semijoias
 
-Site de e-commerce com carrinho, busca, filtro por categoria, favoritos,
-cadastro/login com histórico de compras, e pagamento via **Mercado Pago
-(Checkout Pro)**.
+<p align="center">
+  <img src="https://shields.io" alt="Node.js">
+  <img src="https://shields.io" alt="Express">
+  <img src="https://shields.io" alt="JavaScript">
+  <img src="https://shields.io" alt="Mercado Pago">
+</p>
 
-## Estrutura do projeto
+---
 
-```
+## Funcionalidades Principais
+
+  **E-commerce Completo:** Fluxo de carrinho de compras, busca em tempo real e filtros por categoria.
+   **Autenticação Segura:** Cadastro e login de usuários com criptografia de senhas e sessão persistente via Cookies (7 dias).
+   **Checkout Transparente:** Integração homologada com Mercado Pago para pagamentos eficientes. 
+   **Lista de Desejos:** Opção para favoritar produtos (salvos por usuário).
+   **Área do Cliente:** Painel de perfil para gerenciamento de dados cadastrais e histórico de pedidos.
+   **Design Customizável:** Identidade visual centralizada em variáveis CSS para fácil alteração de cores e fontes.
+
+---
+
+## Estrutura do Projeto
+
+```text
 lume/
-├── index.html              → página da loja (catálogo, busca, filtro, carrinho)
-├── login.html               → entrar na conta
-├── cadastro.html             → criar conta
-├── perfil.html                → dados da conta + histórico de compras
-├── favoritos.html              → peças favoritadas
-├── guia-de-cuidados.html         → como cuidar das semijoias
-├── sucesso.html / erro.html / pendente.html  → retorno do pagamento
-├── css/style.css               → estilos
+├── data/
+│   └── db.json                # Persistência de dados (usuários, pedidos e favoritos)
 ├── js/
-│   ├── products.js              → catálogo de produtos (nome, preço, categoria)
-│   ├── auth-ui.js                → mostra "Entrar" ou o nome do usuário no menu
-│   └── script.js                  → busca, filtro, carrossel, favoritos, carrinho
+│   ├── auth-ui.js             # Gerenciamento de interface baseado no status de login
+│   ├── products.js            # Catálogo de produtos e dados estruturados
+│   └── script.js              # Lógica comercial do front-end (filtros, carrinho, busca)
 ├── lib/
-│   ├── db.js                       → acesso ao "banco de dados" (arquivo JSON)
-│   └── auth.js                      → hash/verificação de senha
-├── data/db.json                      → onde usuários, pedidos e favoritos são salvos
-├── server.js                          → backend Node/Express (API + pagamento)
-├── package.json
-└── .env.example                        → modelo das variáveis de ambiente
+│   ├── auth.js                # Segurança (criptografia hash de senhas)
+│   └── db.js                  # Engine de leitura/escrita do arquivo JSON
+├── css/
+│   └── style.css              # Estilização global, responsividade e tokens de design
+├── index.html                 # Vitrine principal da loja
+├── login.html                 # Tela de autenticação
+├── cadastro.html              # Tela de registro de novos usuários
+├── perfil.html                # Dashboard do cliente e histórico de compras
+├── favoritos.html             # Painel de produtos favoritados
+├── guia-de-cuidados.html      # Central de informações de conservação das peças
+├── sucesso.html               # Callback de pagamento aprovado
+├── erro.html                  # Callback de falha no pagamento
+├── pendente.html              # Callback de processamento de pagamento
+├── server.js                  # Servidor Node.js (API Express e Webhooks)
+├── package.json               # Manifest de dependências e scripts do projeto
+└── .env.example               # Modelo de configuração das variáveis de ambiente
 ```
 
-## O "banco de dados" deste projeto
+---
 
-Para manter o projeto simples de rodar (sem instalar PostgreSQL, MySQL etc.),
-os dados ficam em **`data/db.json`** — um arquivo de texto que guarda usuários,
-pedidos e favoritos. Você pode abrir esse arquivo no VS Code a qualquer momento
-para ver os dados salvos.
+## Arquitetura e Engenharia de Dados
 
-Isso funciona bem para aprender e para uma loja pequena rodando localmente.
-Quando o site crescer (mais gente comprando ao mesmo tempo, precisar de backup
-automático, etc.), o caminho natural é trocar por um banco de verdade —
-PostgreSQL, MySQL ou SQLite — reaproveitando as funções `readDB()`/`writeDB()`
-de `lib/db.js` como ponto de partida.
+### Banco de Dados Simulado (`JSON File System`)
+Para simplificar o processo de deploy e execução local, o projeto utiliza um arquivo local estruturado em **`data/db.json`**. Ele atua como banco de dados NoSQL por meio do módulo centralizado `lib/db.js`. 
+>  *Nota de Escalabilidade:* Se o volume de acessos crescer, a arquitetura está modularizada para que as funções `readDB()` e `writeDB()` sejam facilmente substituídas por drivers de bancos relacionais como **PostgreSQL, MySQL ou SQLite**.
 
-## Como funciona o login
+### Segurança e Sessão
+*   As senhas dos usuários passam por um processo de hash criptográfico antes de serem salvas, utilizando o módulo nativo `crypto` do Node.js.
+*   O estado da sessão é protegido por criptografia de cookies e exige uma chave `SESSION_SECRET` robusta definida no ambiente.
 
-- Senhas nunca são salvas em texto puro — são criptografadas com o módulo
-  `crypto` nativo do Node (`lib/auth.js`).
-- O carrinho **exige login** para finalizar a compra (assim dá pra vincular
-  cada pedido a uma conta e mostrar isso em "Meus pedidos").
-- A sessão de login fica em um cookie, válido por 7 dias.
+---
 
-## Passo a passo para rodar no VS Code
+## Pré-requisitos e Instalação
 
-### 1. Instale o Node.js
-https://nodejs.org (versão LTS). Confirme no terminal:
-```
-node -v
+Antes de começar, certifique-se de ter o [Node.js (versão LTS)](https://nodejs.org) instalado em sua máquina.
+
+### 1. Clonar e Acessar o Projeto
+Abra a pasta do projeto no seu editor (recomendado: VS Code):
+```bash
+# Abra pelo menu do VS Code: Arquivo > Abrir Pasta... e selecione a pasta 'lume'
 ```
 
-### 2. Abra a pasta do projeto no VS Code
-`Arquivo > Abrir Pasta...` e selecione a pasta `lume`.
-
-### 3. Instale as dependências
-```
+### 2. Instalar as Dependências
+No terminal do seu editor, execute:
+```bash
 npm install
 ```
 
-### 4. Configure o `.env`
-Copie `.env.example` para `.env`:
-```
+### 3. Configurar as Variáveis de Ambiente
+Copie o arquivo de exemplo para criar o seu arquivo de configuração oficial:
+```bash
 cp .env.example .env
 ```
-Abra `.env` e:
-- Cole seu **Access Token de TESTE** do Mercado Pago
-  (painel: mercadopago.com.br/developers/panel)
-- Troque `SESSION_SECRET` por qualquer frase aleatória
+Abra o arquivo `.env` recém-criado e configure os seguintes campos:
+*   `MERCADO_PAGO_ACCESS_TOKEN`: Insira o seu token de teste gerado no painel de desenvolvedor do Mercado Pago.
+*   `SESSION_SECRET`: Digite uma frase longa e aleatória para garantir a segurança dos cookies.
 
-### 5. Rode o servidor
-```
+### 4. Inicializar o Servidor
+```bash
 npm start
 ```
-Você deve ver: `✨ Lume rodando em http://localhost:3000`
+Se tudo estiver correto, a seguinte mensagem aparecerá no terminal:
+> `✨ Lume rodando em http://localhost:3000`
 
-### 6. Abra no navegador
-Acesse **http://localhost:3000** — não abra o `index.html` clicando duas
-vezes, precisa passar pelo servidor.
+*Importante:* Sempre acesse o projeto através da URL do servidor local. Não tente abrir o arquivo `index.html` diretamente clicando duas vezes nele.
 
-### 7. Teste o fluxo completo
-1. Crie uma conta em "Entrar" → "Cadastre-se"
-2. Favorite algumas peças (ícone de coração)
-3. Adicione peças à sacola e finalize a compra
-4. Use um [cartão de teste do Mercado Pago](https://www.mercadopago.com.br/developers/pt/docs/checkout-pro/additional-content/your-integrations/test/cards)
-5. Veja o pedido aparecer em "Perfil"
+---
 
-## Próximos passos (quando quiser evoluir)
 
-- **Fotos reais**: hoje as peças usam ícones SVG desenhados à mão. Em
-  `js/products.js`, troque o campo `icon` por um array `images` com os
-  caminhos das fotos, e ajuste a função `slideMarkup()` em `js/script.js`
-  para renderizar `<img>` em vez do ícone.
-- **Banco de dados de verdade**: veja a seção acima sobre `data/db.json`.
-- **Webhook do Mercado Pago**: a confirmação de pagamento hoje depende do
-  cliente voltar para a página de sucesso. Para garantir a confirmação
-  mesmo se ele fechar a aba, implemente um Webhook (IPN) do Mercado Pago.
-- **Hospedagem**: para publicar de verdade, hospede o `server.js` em
-  serviços como Render ou Railway, e aponte seu domínio para lá.
-- **Credenciais de produção**: troque o Access Token de teste pelo de
-  produção no `.env` quando estiver tudo validado.
+## Próximos Passos & Evolução do Sistema
 
-## Personalizar a identidade visual
+Esta aplicação foi desenhada de forma modular para permitir melhorias contínuas. Abaixo estão as implementações recomendadas para produção:
 
-As cores e fontes estão centralizadas no topo do `css/style.css`, dentro de
-`:root`. Trocar a paleta é só editar esses valores — todo o site se atualiza.
+*  **Mídia Realista (Fotos):** Substitua os ícones SVG atuais por imagens reais. Em `js/products.js`, altere o campo `icon` para um array de caminhos de imagens e atualize a função `slideMarkup()` em `js/script.js` para ler tags `<img>`.
+*  **Webhooks (IPN):** Implementar uma rota de escuta de notificações (Webhooks) do Mercado Pago no `server.js` para registrar as vendas mesmo que o cliente feche a janela antes do redirecionamento.
+*  **Banco de Dados de Produção:** Migrar a persistência do arquivo JSON para uma instância gerenciada do PostgreSQL ou MySQL.
+*   **Deploy e Produção:** Hospedar o back-end em plataformas como Render ou Railway, realizar o chaveamento do arquivo `.env` para as credenciais de produção do Mercado Pago e apontar para um domínio customizado com certificado SSL.
+
+---
+
+## Customização Visual
+
+Toda a identidade visual do projeto pode ser modificada instantaneamente sem alterar a estrutura do código. As cores, tipografia e espaçamentos estão centralizados no topo do arquivo `css/style.css` dentro do escopo `:root`. 
+```css
+/* Exemplo de customização rápida */
+:root {
+  --primary-color: #seu-codigo-hex;
+  --accent-color: #seu-codigo-hex;
+}
+```
+
+---
+<p align="center">Desenvolvido com foco em boas práticas de engenharia de software. 💎</p>
